@@ -66,9 +66,6 @@ void GetAEWProcess() {
 }
 
 
-
-
-
 int main()
 {
 	// Search for local offsets
@@ -88,6 +85,8 @@ int main()
 	std::cout << "\n\nRVA: " << std::hex << interfaceOffset << std::endl;
 	std::cout << "RVA: " << std::hex << packOffset << std::endl;
 	std::cout << "RVA: " << std::hex << sigOffset << std::endl;
+
+	_putenv_s("SteamAppId", std::string("1913210").c_str());
 
 	// Launch process and acquire handle
 	GetAEWProcess();
