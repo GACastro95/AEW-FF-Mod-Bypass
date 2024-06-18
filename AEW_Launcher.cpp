@@ -92,9 +92,8 @@ int RunLauncher(char* gamePath)
 	std::string gameName(path.substr(path.rfind("\\") + 1));
 	GetAEWProcess(gamePath, gameName.c_str());
 
-	TCHAR const* procName = gameName.c_str();
 	TCHAR* moduleName = new TCHAR[strlen(gameName.c_str()) + 1];
-	_tcscpy_s(moduleName, strlen(gameName.c_str()) + 1, procName);
+	_tcscpy_s(moduleName, strlen(gameName.c_str()) + 1, gameName.c_str());
 
 	//Get Base Address
 	while (pMeta.clientBase == 0x0) {
