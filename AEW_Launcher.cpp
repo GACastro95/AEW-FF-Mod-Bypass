@@ -2,7 +2,7 @@
 #include "ProcessMain.h"
 #include "ReaderUtils.h"
 #include <iostream>
-#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup") // Hide Console
+#include "AEW_Launcher.h"
 #pragma once 
 
 using namespace std;
@@ -69,7 +69,7 @@ void GetAEWProcess() {
 
 
 
-int main()
+int RunLauncher()
 {
 	// Search for local offsets
 	DWORD interfaceOffset = ReaderUtils::GetInterfaceOffset(moduleName);
@@ -88,6 +88,8 @@ int main()
 	std::cout << "\n\nRVA: " << std::hex << interfaceOffset << std::endl;
 	std::cout << "RVA: " << std::hex << packOffset << std::endl;
 	std::cout << "RVA: " << std::hex << sigOffset << std::endl;
+
+	_putenv_s("SteamAppId", std::string("1913210").c_str());
 
 	// Launch process and acquire handle
 	GetAEWProcess();
