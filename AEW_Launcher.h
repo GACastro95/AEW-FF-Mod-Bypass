@@ -6,4 +6,4 @@
 #define MODLOADER_API __declspec(dllimport)
 #endif
 
-extern "C" MODLOADER_API int RunLauncher();
+extern "C" MODLOADER_API int RunLauncher(char* str);
