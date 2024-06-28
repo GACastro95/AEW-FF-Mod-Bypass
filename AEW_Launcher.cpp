@@ -62,10 +62,9 @@ void GetAEWProcess(const char* gamePath, const char* gameName) {
 
 
 
-
-
 int RunLauncher(char* gamePath)
 {
+	std::cout << "Path: " << gamePath << std::endl;
 
 	// Search for local offsets
 	DWORD interfaceOffset = ReaderUtils::GetInterfaceOffset(gamePath);
@@ -73,7 +72,7 @@ int RunLauncher(char* gamePath)
 	DWORD sigOffset = ReaderUtils::GetSigOffset(gamePath);
 
 	if (interfaceOffset == 0x0 || packOffset == 0x0 || sigOffset == 0x0) {
-		return 0;
+		return 1;
 	}
 
 	// Collect all RVA's using offset
@@ -81,9 +80,9 @@ int RunLauncher(char* gamePath)
 	packOffset = GetRVAFromFileOffset(gamePath, packOffset);
 	sigOffset = GetRVAFromFileOffset(gamePath, sigOffset);
 
-	std::cout << "\n\nRVA: " << std::hex << interfaceOffset << std::endl;
-	std::cout << "RVA: " << std::hex << packOffset << std::endl;
-	std::cout << "RVA: " << std::hex << sigOffset << std::endl;
+	std::cout << "Interface RVA: " << std::hex << interfaceOffset << std::endl;
+	std::cout << "Pack RVA: " << std::hex << packOffset << std::endl;
+	std::cout << "Sig RVA: " << std::hex << sigOffset << std::endl;
 
 	_putenv_s("SteamAppId", std::string("1913210").c_str());
 
@@ -101,7 +100,7 @@ int RunLauncher(char* gamePath)
 	}
 
 	// Overrides process terminate functions
-	UpdateAEWModule( interfaceOffset, packOffset, sigOffset );
+	UpdateAEWModule(interfaceOffset, packOffset, sigOffset);
 
 	return 0;
 }
